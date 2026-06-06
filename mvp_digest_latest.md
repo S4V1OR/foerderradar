@@ -1,11 +1,11 @@
 # FörderRadar MVP-Digest
 
-- Generiert: 06.06.2026 04:29 UTC
+- Generiert: 06.06.2026 10:30 UTC
 - Scope: Live-Quellencheck für FörderRadar Energieberater
-- Vergleichsbasis: 2026-06-06T04:26:49.547851+00:00
+- Vergleichsbasis: 2026-06-06T04:29:57.662492+00:00
 
 ## Änderungen seit letztem Lauf
-- Neu: 0 | Geändert: 0 | Unverändert: 6
+- Neu: 1 | Geändert: 0 | Unverändert: 6
 
 ### KfW – Förderung für Unternehmen — UNCHANGED
 - Änderung: Keine inhaltliche Änderung erkannt.
@@ -20,6 +20,13 @@
 - Zielgruppe: Wohngebäude, Nichtwohngebäude, Anlagen & Prozesse
 - Frist: 31.05.2023
 - Empfohlene Aktion: Deadline im Blick behalten und betroffene Kundenfälle priorisieren.
+
+### Förderportal des Bundes — NEW
+- Änderung: Keine Vergleichsbasis vorhanden; Quelle erstmals im Diff erfasst.
+- Impact: hoch
+- Zielgruppe: nicht erkannt
+- Frist: nicht erkannt
+- Empfohlene Aktion: Relevante Förderfälle prüfen und Änderungen für Energieberater markieren.
 
 ### EEE – Energie-Effizienz-Experten — UNCHANGED
 - Änderung: Keine inhaltliche Änderung erkannt.
@@ -69,6 +76,16 @@
 - Zielgruppe: Wohngebäude, Nichtwohngebäude, Anlagen & Prozesse
 - Frist: 31.05.2023
 - Empfohlene Aktion: Deadline im Blick behalten und betroffene Kundenfälle priorisieren.
+
+### Förderportal des Bundes — OK
+- URL: https://foerderportal.bund.de/
+- Titel: Frderportal des Bundes
+- Marker: Frderportal des Bundes, Frderdatenbank, Frderkatalog
+- Evidenz: Frderportal des Bundes Home | Impressum Frderportal des Bundes Frderberatung Frderdatenbank Frderkatalog Antragssystem easy-Online Formularschrank profi-Online zins-Online Links oder Rechts --> Das Frde
+- Impact: hoch
+- Zielgruppe: nicht erkannt
+- Frist: nicht erkannt
+- Empfohlene Aktion: Relevante Förderfälle prüfen und Änderungen für Energieberater markieren.
 
 ### EEE – Energie-Effizienz-Experten — OK
 - URL: https://www.energie-effizienz-experten.de/

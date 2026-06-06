@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FörderRadar – Relevante Fördermittel-Änderungen für Energieberater</title>
+  <meta name="description" content="FörderRadar verdichtet relevante Fördermittel-Änderungen für Energieberater auf verwertbare Updates in unter 5 Minuten." />
+  <style>
+    :root {
+      --bg: #0f1117;
+      --bg-soft: #141826;
+      --card: rgba(255,255,255,0.055);
+      --card-strong: rgba(255,255,255,0.075);
+      --border: rgba(255,255,255,0.10);
+      --border-strong: rgba(255,255,255,0.18);
+      --text: rgba(255,255,255,0.94);
+      --text-soft: rgba(255,255,255,0.68);
+      --text-muted: rgba(255,255,255,0.46);
+      --accent: #5e6ad2;
+      --accent-soft: rgba(94,106,210,0.16);
+      --accent-strong: rgba(94,106,210,0.32);
+      --success: #74d39a;
+      --warning: #f4c26b;
+      --shadow: 0 30px 80px rgba(0,0,0,0.38);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --grid: minmax(0, 1fr);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-feature-settings: "cv01" 1, "ss03" 1;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(94,106,210,0.22), transparent 32%),
+        radial-gradient(circle at 82% 16%, rgba(130,146,255,0.15), transparent 28%),
+        radial-gradient(circle at 72% 78%, rgba(53,88,195,0.18), transparent 34%),
+        linear-gradient(180deg, #111523 0%, #0f1117 46%, #0d1016 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.45), transparent 82%);
+      opacity: 0.34;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .shell {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 28px 0 18px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(94,106,210,0.24), rgba(94,106,210,0.08));
+      border: 1px solid rgba(94,106,210,0.36);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .brand svg { width: 22px; height: 22px; }
+    .brand-copy strong { display: block; font-size: 0.92rem; font-weight: 650; }
+    .brand-copy span { display: block; font-size: 0.78rem; color: var(--text-muted); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .ghost,
+    .ghost-inline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      backdrop-filter: blur(18px);
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .ghost:hover,
+    .ghost-inline:hover { transform: translateY(-1px); border-color: var(--border-strong); background: rgba(255,255,255,0.05); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.95fr;
+      gap: 28px;
+      align-items: stretch;
+      padding: 34px 0 76px;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      backdrop-filter: blur(26px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(140deg, rgba(255,255,255,0.04), transparent 38%, transparent 62%, rgba(94,106,210,0.06));
+      pointer-events: none;
+    }
+
+    .hero-copy {
+      padding: 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 610px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(94,106,210,0.1);
+      border: 1px solid rgba(94,106,210,0.28);
+      color: rgba(222,227,255,0.9);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 22px 0 18px;
+      font-size: clamp(3rem, 7vw, 5.6rem);
+      line-height: 0.94;
+      letter-spacing: -0.05em;
+      max-width: 10.4ch;
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 60ch;
+      font-size: 1.08rem;
+      line-height: 1.75;
+      color: var(--text-soft);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 28px 0 20px;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, rgba(94,106,210,0.22), rgba(94,106,210,0.1));
+      border-color: rgba(94,106,210,0.4);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 0 0 1px rgba(94,106,210,0.08);
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .metric {
+      padding: 18px 18px 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.028);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.65rem;
+      margin-bottom: 8px;
+      letter-spacing: -0.04em;
+    }
+
+    .metric span { color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; }
+
+    .hero-card {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      min-height: 610px;
+    }
+
+    .hero-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      color: var(--text-soft);
+      font-size: 0.92rem;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(116,211,154,0.08);
+      border: 1px solid rgba(116,211,154,0.22);
+      color: #cdeed9;
+      width: fit-content;
+    }
+
+    .status-pill::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 6px rgba(116,211,154,0.12);
+    }
+
+    .sample-card,
+    .list-card,
+    .pricing-card,
+    .info-card,
+    .cta-card {
+      padding: 24px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.032);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(18px);
+    }
+
+    .sample-card h2,
+    .section-heading h2,
+    .cta-copy h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.05em;
+    }
+
+    .sample-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .sample-head p,
+    .section-heading p,
+    .pricing-card p,
+    .info-card p,
+    .cta-copy p,
+    .sample-card p { color: var(--text-soft); line-height: 1.7; }
+
+    .stack { display: grid; gap: 14px; }
+
+    .change-item {
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.038), rgba(255,255,255,0.022));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .change-item header,
+    .list-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-soft);
+      font-size: 0.82rem;
+    }
+
+    .tag.accent { background: rgba(94,106,210,0.12); border-color: rgba(94,106,210,0.22); color: #d6dcff; }
+    .tag.warn { background: rgba(244,194,107,0.12); border-color: rgba(244,194,107,0.24); color: #f7dfb5; }
+
+    .meta-grid,
+    .cards-grid,
+    .pricing-grid,
+    .info-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 16px; }
+    .cards-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .pricing-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .info-grid { grid-template-columns: 1.1fr 0.9fr; align-items: start; }
+
+    .meta-grid div {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.026);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .meta-grid strong,
+    .pricing-card strong,
+    .info-card strong,
+    .list-card strong { display: block; margin-bottom: 8px; font-size: 1rem; }
+
+    section {
+      padding: 22px 0 30px;
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    .list-card ul,
+    .pricing-card ul,
+    .info-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text-soft);
+      line-height: 1.8;
+    }
+
+    .smallcaps {
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+      margin-bottom: 14px;
+      display: inline-block;
+    }
+
+    .pricing-card {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .price {
+      font-size: 3rem;
+      letter-spacing: -0.06em;
+      line-height: 1;
+      margin: 8px 0 4px;
+    }
+
+    .pricing-card.featured {
+      background: linear-gradient(180deg, rgba(94,106,210,0.15), rgba(255,255,255,0.05));
+      border-color: rgba(94,106,210,0.28);
+      transform: translateY(-6px);
+    }
+
+    .waitlist {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .waitlist input {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      min-height: 50px;
+      padding: 0 18px;
+      outline: none;
+    }
+
+    .waitlist button {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(94,106,210,0.36);
+      background: rgba(94,106,210,0.14);
+      color: var(--text);
+      cursor: pointer;
+      transition: transform 160ms ease, background 160ms ease;
+    }
+
+    .waitlist button:hover { transform: translateY(-1px); background: rgba(94,106,210,0.2); }
+
+    .waitlist-note {
+      margin-top: 12px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 42px 0 64px;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      flex-wrap: wrap;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: rise 700ms ease forwards;
+    }
+
+    .reveal.delay-1 { animation-delay: 100ms; }
+    .reveal.delay-2 { animation-delay: 180ms; }
+    .reveal.delay-3 { animation-delay: 260ms; }
+    .reveal.delay-4 { animation-delay: 340ms; }
+
+    @keyframes rise {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .section-heading,
+      .info-grid { grid-template-columns: 1fr; }
+      .cards-grid,
+      .pricing-grid { grid-template-columns: 1fr; }
+      .hero-copy,
+      .hero-card { min-height: auto; }
+    }
+
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 24px, 1180px); }
+      .nav { padding-top: 18px; }
+      .nav-links { display: none; }
+      .hero { padding-top: 16px; gap: 20px; }
+      .hero-copy,
+      .hero-card,
+      .sample-card,
+      .list-card,
+      .pricing-card,
+      .info-card,
+      .cta-card { padding: 20px; border-radius: 22px; }
+      .hero-metrics,
+      .meta-grid { grid-template-columns: 1fr; }
+      .waitlist { grid-template-columns: 1fr; }
+      h1 { max-width: 11ch; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="nav reveal">
+      <a class="brand" href="#top" aria-label="FörderRadar Startseite">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 15.5c3.2-6.5 8.6-9.8 16-10" stroke="rgba(255,255,255,0.94)" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M4 19c5.6-6.2 10.8-8.7 16-9" stroke="rgba(94,106,210,1)" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="7.2" cy="16.8" r="2.2" fill="rgba(94,106,210,1)"/>
+          </svg>
+        </span>
+        <span class="brand-copy">
+          <strong>FörderRadar</strong>
+          <span>Signalmonitor für Energieberater</span>
+        </span>
+      </a>
+      <div class="nav-links">
+        <a class="ghost-inline" href="#produkt">Produkt</a>
+        <a class="ghost-inline" href="#differenz">Differenzierung</a>
+        <a class="ghost-inline" href="#preise">Preise</a>
+        <a class="ghost-inline" href="#waitlist">Waitlist</a>
+      </div>
+    </nav>
+
+    <header id="top" class="hero">
+      <section class="panel hero-copy reveal delay-1">
+        <div>
+          <div class="eyebrow">B2B-Monitoring · Energieberater</div>
+          <h1>Relevante Fördermittel-Änderungen in unter fünf Minuten.</h1>
+          <p class="lede">
+            FörderRadar filtert aus verstreuten BAFA-, KfW- und Umfeldquellen genau die Änderungen,
+            die für Energieberater wirklich handlungsrelevant sind: mit Impact, Zielgruppe, Frist und
+            einer direkten Empfehlung für den nächsten Schritt.
+          </p>
+          <div class="hero-actions">
+            <a class="ghost primary" href="#waitlist">Probe-Digest vormerken</a>
+            <a class="ghost" href="#digest">Beispielausgabe ansehen</a>
+          </div>
+          <div class="proof">
+            <span class="tag accent">Änderungen statt Kataloge</span>
+            <span class="tag">Kuratiert für Energieberater</span>
+            <span class="tag">Weniger Rauschen</span>
+          </div>
+        </div>
+        <div class="hero-metrics">
+          <div class="metric">
+            <strong>&lt;5 Min</strong>
+            <span>typische Verwertungszeit pro Ausgabe statt manuellem Quellen-Check</span>
+          </div>
+          <div class="metric">
+            <strong>6 Quellen</strong>
+            <span>im Live-Quellencheck bestätigt: KfW, BAFA, EEE, Förderdata, DTAD und ibau</span>
+          </div>
+          <div class="metric">
+            <strong>1 Signalfeed</strong>
+            <span>statt BAFA, KfW, Fördersuche und Adjazenzquellen einzeln zu monitoren</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel hero-card reveal delay-2" id="digest">
+        <div class="hero-card-top">
+          <div>
+            <strong>Demo: MVP-Wochen-Digest</strong>
+            <div style="margin-top:8px;color:var(--text-muted);">Aus dem aktuellen Live-Quellencheck abgeleitet · klar als Prototyp markiert</div>
+          </div>
+          <span class="status-pill">Demo · live geprüft</span>
+        </div>
+
+        <div class="sample-card">
+          <div class="sample-head">
+            <div>
+              <span class="smallcaps">Auszug aus mvp_digest_latest.md</span>
+              <h2>Änderungen seit letztem Lauf</h2>
+            </div>
+            <span class="tag warn">Neu: 0 · Geändert: 0 · Unverändert: 6</span>
+          </div>
+          <p style="margin-top:0;">Scope: Live-Quellencheck für FörderRadar Energieberater · Vergleichsbasis: 2026-06-06T04:26:49.547851+00:00</p>
+          <div class="stack">
+            <article class="change-item">
+              <header>
+                <strong>BAFA – Energie</strong>
+                <span class="tag accent">UNCHANGED</span>
+              </header>
+              <p>Keine inhaltliche Änderung erkannt. Impact: hoch · Zielgruppe: Wohngebäude, Nichtwohngebäude, Anlagen &amp; Prozesse · Frist: 31.05.2023 · Empfohlene Aktion: Deadline im Blick behalten und betroffene Kundenfälle priorisieren.</p>
+            </article>
+            <article class="change-item">
+              <header>
+                <strong>KfW – Förderung für Unternehmen</strong>
+                <span class="tag">UNCHANGED</span>
+              </header>
+              <p>Keine inhaltliche Änderung erkannt. Impact: hoch · Zielgruppe: Unternehmen, Öffentliche Einrichtungen · Frist: nicht erkannt · Empfohlene Aktion: Relevante Förderfälle prüfen und Änderungen für Energieberater markieren.</p>
+            </article>
+            <div class="change-item">
+              <header>
+                <strong>Quellenstatus</strong>
+                <span class="tag">6 OK-Quellen</span>
+              </header>
+              <p>Bestätigt im selben Lauf: KfW, BAFA, EEE, Förderdata, DTAD und ibau. So bleibt die Demo-Ausgabe eng an den aktuellen Quellenstatus gebunden.</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </header>
+
+    <section id="produkt">
+      <div class="section-heading reveal delay-1">
+        <div>
+          <span class="smallcaps">Produktlogik</span>
+          <h2>Kein Datenkatalog. Ein operativer Signalfeed.</h2>
+        </div>
+        <p>
+          FörderRadar ist nicht darauf optimiert, möglichst viele Programme aufzulisten. Das System ist darauf
+          optimiert, relevante Änderungen schnell lesbar und sofort umsetzbar zu machen.
+        </p>
+      </div>
+      <div class="cards-grid">
+        <article class="list-card reveal delay-1">
+          <strong>1. Quellenmonitor</strong>
+          <p>Live-Checks auf BAFA, KfW und angrenzenden Vergleichsquellen mit Run-zu-Run-Änderungserkennung.</p>
+          <ul>
+            <li>Erreichbarkeit und Marker je Quelle</li>
+            <li>Vergleich zwischen zwei Läufen</li>
+            <li>Snapshot-Historie für spätere Alerts</li>
+          </ul>
+        </article>
+        <article class="list-card reveal delay-2">
+          <strong>2. Relevanzschicht</strong>
+          <p>Jede Meldung wird auf Energieberater-Sicht verdichtet statt als Rohtext weitergereicht.</p>
+          <ul>
+            <li>Impact</li>
+            <li>Zielgruppe</li>
+            <li>Frist</li>
+            <li>empfohlene Aktion</li>
+          </ul>
+        </article>
+        <article class="list-card reveal delay-3">
+          <strong>3. Verwertbarer Output</strong>
+          <p>Ausgaben sind auf Beratungsalltag und Kundenfälle ausgerichtet, nicht auf Datenfülle.</p>
+          <ul>
+            <li>Weekly Digest</li>
+            <li>kritische Change Alerts</li>
+            <li>kompaktes Archiv je Quelle</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="differenz">
+      <div class="section-heading reveal delay-1">
+        <div>
+          <span class="smallcaps">Wettbewerbsumfeld</span>
+          <h2>Wo FörderRadar besser werden muss als bestehende Lösungen.</h2>
+        </div>
+        <p>
+          Das Produkt gewinnt nicht durch mehr Quellen, sondern durch bessere Verdichtung und schnellere
+          Umsetzbarkeit pro Update.
+        </p>
+      </div>
+      <div class="cards-grid">
+        <article class="info-card reveal delay-1">
+          <strong>Offizielle Primärquellen</strong>
+          <p>BAFA und KfW sind autoritativ, aber nicht als kompakter Energieberater-Änderungsfeed gebaut.</p>
+          <ul>
+            <li>roh und verteilt</li>
+            <li>kein Priorisierungsrahmen</li>
+            <li>keine direkte Handlungsableitung</li>
+          </ul>
+        </article>
+        <article class="info-card reveal delay-2">
+          <strong>Fördersuche & Service-Anbieter</strong>
+          <p>Breitere Services zeigen Zahlungsbereitschaft, filtern aber selten nur die operative Relevanz für Energieberater.</p>
+          <ul>
+            <li>breiter Scope</li>
+            <li>mehr Rauschen</li>
+            <li>weniger enger Use-Case</li>
+          </ul>
+        </article>
+        <article class="info-card reveal delay-3">
+          <strong>Adjazente Monitoring-Produkte</strong>
+          <p>Marktbeweis für bezahlte Signalsysteme ist da – aber nicht mit Fördermittel-Fokus für diese Zielgruppe.</p>
+          <ul>
+            <li>Ausschreibungen statt Förderlogik</li>
+            <li>andere Entscheidungszyklen</li>
+            <li>geringere ICP-Passung</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="preise">
+      <div class="section-heading reveal delay-1">
+        <div>
+          <span class="smallcaps">Pricing-Hypothese</span>
+          <h2>Mit wenigen zahlenden Kunden über die 200€-Schwelle.</h2>
+        </div>
+        <p>
+          Das Modell ist bewusst klein und vertikal: lieber wenige zahlende Büros mit hohem Nutzwert als breite
+          Reichweite ohne Entscheidungssignal.
+        </p>
+      </div>
+      <div class="pricing-grid">
+        <article class="pricing-card reveal delay-1">
+          <div>
+            <span class="smallcaps">Free</span>
+            <div class="price">0€</div>
+            <p>Für Erstkontakt und Validierung mit einer öffentlichen Beispielausgabe.</p>
+          </div>
+          <ul>
+            <li>Warteliste</li>
+            <li>1 Probe-Digest</li>
+            <li>keine Sofort-Alerts</li>
+          </ul>
+        </article>
+        <article class="pricing-card featured reveal delay-2">
+          <div>
+            <span class="smallcaps">Pro</span>
+            <div class="price">19€</div>
+            <p>Der Kernplan für kleine Büros, die wöchentliche Änderungen kompakt monitoren wollen.</p>
+          </div>
+          <ul>
+            <li>Weekly Digest</li>
+            <li>priorisierte Förderänderungen</li>
+            <li>kompaktes Archiv</li>
+          </ul>
+        </article>
+        <article class="pricing-card reveal delay-3">
+          <div>
+            <span class="smallcaps">Plus</span>
+            <div class="price">39€</div>
+            <p>Für engere Reaktionszeiten und stärkere Filterung nach realem Beratungsumfeld.</p>
+          </div>
+          <ul>
+            <li>Sofort-Alerts</li>
+            <li>stärkere Relevanzfilter</li>
+            <li>regionale bzw. Use-Case-Sortierung</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="info-grid">
+        <article class="info-card reveal delay-1">
+          <span class="smallcaps">Warum das kaufbar ist</span>
+          <h2 style="margin:0 0 14px; font-size:clamp(1.8rem,3vw,2.5rem); letter-spacing:-0.05em;">Zeitgewinn ist die eigentliche Währung.</h2>
+          <p>
+            Energieberater brauchen keine weitere Linkliste. Sie brauchen weniger verpasste Änderungen,
+            weniger manuelle Quellensuche und klarere nächste Schritte für reale Kundenfälle.
+          </p>
+          <ul>
+            <li>weniger verstreute Recherche</li>
+            <li>frühere Reaktion auf Förderänderungen</li>
+            <li>klarere Priorisierung für Angebote und laufende Fälle</li>
+          </ul>
+        </article>
+        <article class="cta-card reveal delay-2" id="waitlist">
+          <div class="cta-copy">
+            <span class="smallcaps">Frühe Warteliste</span>
+            <h2>Probe-Digest vormerken</h2>
+            <p>
+              Diese Warteliste sendet Vormerkungen jetzt an ein öffentliches Demo-Write-Target. Der Browser speichert
+              zusätzlich eine lokale Kopie, damit der Lead-Flow auch bei Störungen nachvollziehbar bleibt.
+            </p>
+          </div>
+          <form class="waitlist" id="waitlist-form">
+            <input id="email" type="email" placeholder="E-Mail für Probe-Digest" aria-label="E-Mail-Adresse" required />
+            <button type="submit">Vormerken</button>
+          </form>
+          <div id="waitlist-status" class="waitlist-note">Leads landen im öffentlichen Demo-Write-Target und werden zusätzlich lokal gespiegelt.</div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer reveal delay-3">
+      <span>FörderRadar · Landingpage-Prototyp für Positionierung, Pricing und Waitlist-Test</span>
+      <a href="./digest.html">Aktuellen MVP-Digest öffnen</a>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const form = document.getElementById('waitlist-form');
+      const emailInput = document.getElementById('email');
+      const status = document.getElementById('waitlist-status');
+      const submitButton = form.querySelector('button[type="submit"]');
+      const storageKey = 'foerderradar_waitlist_demo';
+      const leadTargetUrl = 'https://webhook.site/d5adfa5a-d21d-4832-9db4-4fabf7f4b75a';
+
+      function loadEntries() {
+        try {
+          return JSON.parse(localStorage.getItem(storageKey) || '[]');
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function saveEntry(value) {
+        const entries = loadEntries();
+        if (!entries.includes(value)) {
+          entries.push(value);
+          localStorage.setItem(storageKey, JSON.stringify(entries));
+        }
+      }
+
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const value = emailInput.value.trim();
+        if (!value || !value.includes('@')) {
+          status.textContent = 'Bitte eine gültige E-Mail-Adresse eingeben.';
+          return;
+        }
+
+        submitButton.disabled = true;
+        status.textContent = 'Sende Vormerkung an das öffentliche Demo-Write-Target...';
+
+        const payload = {
+          email: value,
+          source: 'foerderradar-landingpage',
+          capturedAt: new Date().toISOString(),
+        };
+
+        try {
+          const response = await fetch(leadTargetUrl, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          });
+
+          saveEntry(value);
+
+          if (!response.ok) {
+            throw new Error('Webhook returned ' + response.status);
+          }
+
+          status.textContent = 'Vormerkung gesendet. Das öffentliche Demo-Write-Target hat den Lead erhalten.';
+          form.reset();
+        } catch (error) {
+          saveEntry(value);
+          status.textContent = 'Senden fehlgeschlagen, lokale Kopie gespeichert. Demo-Write-Target bitte prüfen.';
+          console.warn('Waitlist submit failed', error);
+        } finally {
+          submitButton.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

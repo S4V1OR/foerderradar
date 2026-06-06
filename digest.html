@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FörderRadar – MVP-Digest</title>
+  <meta name="description" content="FörderRadar Beispiel-Digest: kompakter Förderänderungs-Feed für Energieberater mit Impact-, Zielgruppen- und Frist-Normalisierung.">
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --panel: #111722;
+      --panel-2: #16202f;
+      --text: #e8edf5;
+      --muted: #9aa7b8;
+      --accent: #7aa2ff;
+      --ok: #46d39a;
+      --warn: #f5c86c;
+      --border: rgba(255,255,255,.08);
+      --shadow: 0 20px 60px rgba(0,0,0,.32);
+      --radius: 18px;
+      --max: 980px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: radial-gradient(circle at top, rgba(122,162,255,.12), transparent 34%), var(--bg); color: var(--text); font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif; }
+    body { line-height: 1.6; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 32px 20px 64px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    .brand { display: grid; gap: 4px; }
+    .brand strong { font-size: 1.15rem; }
+    .brand span { color: var(--muted); font-size: .95rem; }
+    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); background: rgba(255,255,255,.03); }
+    .hero, .card { background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025)); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .hero { padding: 28px; margin-bottom: 20px; }
+    .hero h1 { margin: 0 0 8px; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; }
+    .hero p { margin: 0; color: var(--muted); max-width: 70ch; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .meta .pill strong { color: var(--text); font-weight: 600; }
+    .grid { display: grid; gap: 16px; }
+    .section { margin-top: 22px; }
+    .section h2 { margin: 0 0 10px; font-size: 1.4rem; }
+    .section > p { margin-top: 0; color: var(--muted); }
+    .card { padding: 20px; }
+    .change { margin-top: 14px; padding: 16px; border-radius: 14px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.05); }
+    .change header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .change h3 { margin: 0; font-size: 1.05rem; }
+    .tag { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font-size: .78rem; letter-spacing: .02em; border: 1px solid rgba(255,255,255,.12); color: var(--text); }
+    .tag.ok { background: rgba(70,211,154,.12); color: #aef0d2; }
+    .tag.warn { background: rgba(245,200,108,.12); color: #ffe3a2; }
+    .tag.accent { background: rgba(122,162,255,.12); color: #c6d7ff; }
+    ul { margin: 10px 0 0 18px; color: var(--muted); }
+    .small { color: var(--muted); font-size: .92rem; }
+    .footer { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--border); color: var(--muted); }
+    .footer nav { display: flex; gap: 12px; flex-wrap: wrap; }
+    .note { padding: 14px 16px; border-left: 3px solid var(--accent); background: rgba(122,162,255,.08); border-radius: 12px; color: #d8e5ff; }
+    @media (max-width: 720px) {
+      .topbar, .footer, .change header { flex-direction: column; align-items: flex-start; }
+      .wrap { padding-inline: 14px; }
+      .hero { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <strong>FörderRadar</strong>
+        <span>MVP-Digest · Energieberater-Fördermonitor</span>
+      </div>
+      <span class="pill">Demo · statische Prototyp-Seite</span>
+    </div>
+
+    <section class="hero">
+      <h1>MVP-Digest</h1>
+      <p>Ein kompakter Änderungsfeed für Energieberater: nicht mehr Rohdaten, sondern die Änderungen, die bei BAFA, KfW und angrenzenden Quellen operativ relevant sind.</p>
+      <div class="meta">
+        <span class="pill"><strong>Generiert:</strong> 06.06.2026 04:29 UTC</span>
+        <span class="pill"><strong>Scope:</strong> Live-Quellencheck</span>
+        <span class="pill"><strong>Vergleichsbasis:</strong> 2026-06-06T04:26:49Z</span>
+      </div>
+      <div class="note" style="margin-top:18px;">Prototype: Diese Seite ist als public-facing Digest-Demo gedacht. Sie wird aus dem aktuellen Digest abgeleitet und dient als verlinkbares Beispiel für den nächsten Veröffentlichungs-/Deployment-Schritt.</div>
+    </section>
+
+    <section class="section card">
+      <h2>Änderungen seit letztem Lauf</h2>
+      <p>Neu: 0 · Geändert: 0 · Unverändert: 6</p>
+
+      <div class="change">
+        <header>
+          <h3>KfW – Förderung für Unternehmen</h3>
+          <span class="tag accent">UNCHANGED</span>
+        </header>
+        <p>Keine inhaltliche Änderung erkannt.</p>
+        <ul>
+          <li><strong>Impact:</strong> hoch</li>
+          <li><strong>Zielgruppe:</strong> Unternehmen, Öffentliche Einrichtungen</li>
+          <li><strong>Frist:</strong> nicht erkannt</li>
+          <li><strong>Empfohlene Aktion:</strong> Relevante Förderfälle prüfen und Änderungen für Energieberater markieren.</li>
+        </ul>
+      </div>
+
+      <div class="change">
+        <header>
+          <h3>BAFA – Energie</h3>
+          <span class="tag accent">UNCHANGED</span>
+        </header>
+        <p>Keine inhaltliche Änderung erkannt.</p>
+        <ul>
+          <li><strong>Impact:</strong> hoch</li>
+          <li><strong>Zielgruppe:</strong> Wohngebäude, Nichtwohngebäude, Anlagen &amp; Prozesse</li>
+          <li><strong>Frist:</strong> 31.05.2023</li>
+          <li><strong>Empfohlene Aktion:</strong> Deadline im Blick behalten und betroffene Kundenfälle priorisieren.</li>
+        </ul>
+      </div>
+
+      <div class="change">
+        <header>
+          <h3>EEE – Energie-Effizienz-Experten</h3>
+          <span class="tag">UNCHANGED</span>
+        </header>
+        <p>Keine inhaltliche Änderung erkannt.</p>
+        <ul>
+          <li><strong>Impact:</strong> mittel</li>
+          <li><strong>Zielgruppe:</strong> Unternehmen, Wohngebäude, Nichtwohngebäude, Anlagen &amp; Prozesse</li>
+          <li><strong>Frist:</strong> nicht erkannt</li>
+          <li><strong>Empfohlene Aktion:</strong> Quelle beobachten und nur bei konkretem Kundenbezug vertiefen.</li>
+        </ul>
+      </div>
+
+      <div class="change">
+        <header>
+          <h3>Förderdata</h3>
+          <span class="tag">UNCHANGED</span>
+        </header>
+        <p>Keine inhaltliche Änderung erkannt.</p>
+        <ul>
+          <li><strong>Impact:</strong> mittel</li>
+          <li><strong>Zielgruppe:</strong> Unternehmen, Wohngebäude</li>
+          <li><strong>Frist:</strong> nicht erkannt</li>
+          <li><strong>Empfohlene Aktion:</strong> Quelle beobachten und nur bei konkretem Kundenbezug vertiefen.</li>
+        </ul>
+      </div>
+
+      <div class="change">
+        <header>
+          <h3>DTAD Plattform</h3>
+          <span class="tag">UNCHANGED</span>
+        </header>
+        <p>Keine inhaltliche Änderung erkannt.</p>
+        <ul>
+          <li><strong>Impact:</strong> mittel</li>
+          <li><strong>Zielgruppe:</strong> nicht erkannt</li>
+          <li><strong>Frist:</strong> nicht erkannt</li>
+          <li><strong>Empfohlene Aktion:</strong> Quelle beobachten und nur bei konkretem Kundenbezug vertiefen.</li>
+        </ul>
+      </div>
+
+      <div class="change">
+        <header>
+          <h3>ibau</h3>
+          <span class="tag">UNCHANGED</span>
+        </header>
+        <p>Keine inhaltliche Änderung erkannt.</p>
+        <ul>
+          <li><strong>Impact:</strong> mittel</li>
+          <li><strong>Zielgruppe:</strong> nicht erkannt</li>
+          <li><strong>Frist:</strong> nicht erkannt</li>
+          <li><strong>Empfohlene Aktion:</strong> Quelle beobachten und nur bei konkretem Kundenbezug vertiefen.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section card">
+      <h2>Quellenstatus</h2>
+      <div class="grid">
+        <div class="change">
+          <header>
+            <h3>Live-Check bestätigt</h3>
+            <span class="tag ok">6 OK-Quellen</span>
+          </header>
+          <p>Der Digest bleibt eng an den aktuell geprüften Quellen: KfW, BAFA, EEE, Förderdata, DTAD und ibau.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section card">
+      <h2>Vorläufige Differenzierung</h2>
+      <div class="grid">
+        <div class="change">
+          <header>
+            <h3>Womit FörderRadar punkten soll</h3>
+            <span class="tag warn">Signalfeed</span>
+          </header>
+          <ul>
+            <li>Änderungen statt Kataloge</li>
+            <li>Relevanzfilter für Energieberater</li>
+            <li>Impact-/Zielgruppen-/Frist-Normalisierung</li>
+            <li>weniger Rauschen, mehr verwertbare Aktion</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div>Zurück zur Landingpage oder weiter zur nächsten Veröffentlichungsversion.</div>
+      <nav>
+        <a href="./index.html">← Startseite</a>
+        <a href="./mvp_digest_latest.md">Markdown-Basis</a>
+      </nav>
+    </div>
+  </div>
+</body>
+</html>
